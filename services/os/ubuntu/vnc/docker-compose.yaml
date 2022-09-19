@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  ubuntu:
+    image: dorowu/ubuntu-desktop-lxde-vnc:focal
+    container_name: ubuntu
+    hostname: ubuntu
+    env_file: './env'
+    ports:
+      - '5900:5900'
+      - '6080:80'
