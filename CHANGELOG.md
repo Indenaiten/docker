@@ -6,4 +6,8 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.
 
 ## UNRELEASED
 
+### ADDED
+
+- Se han añadido el fichero `YAML` de Docker Compose con los servicios de `MySQL` `8.0.30` y `PHPMyAdmin` `5.2.0` en la carpeta `./services/databases/mysql`.
+
 ---
