@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:13
+    container_name: database
+    hostname: database
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_USER: odoo
+    networks:
+      - net-database
+      - net-app
+    volumes:
+      - 'vol-database:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+
+  pgadmin:
+    image: dpage/pgadmin4:6.13
+    container_name: pgadmin
+    hostname: pgadmin
+    restart: always
+    depends_on:
+      - database
+    environment:
+      PGADMIN_DEFAULT_EMAIL: odoo@admin.com
+      PGADMIN_DEFAULT_PASSWORD: odoo
+    networks:
+      - net-database
+    volumes:
+      - 'vol-pgadmin:/var/lib/pgadmin' 
+      - './docker-data/pgadmin/config/servers.json:/pgadmin4/servers.json'
+    ports:
+      - '8080:80'
+  
+  app:
+    image: odoo:15.0
+    container_name: app
+    hostname: app
+    depends_on:
+      - net-app
+    environment:
+      HOST: database
+      USER: odoo
+      PASSWORD: odoo
+    networks:
+      - net-app
+    volumes:
+      - 'vol-app:/var/lib/odoo'
+      - './app/config:/etc/odoo'
+      - './app/addons:/mnt/extra-addons'
+    ports:
+      - "80:8069"
+
+networks:
+  net-database:
+  net-app:
+  
+volumes:
+  vol-database:
+  vol-pgadmin:
+  vol-app:
