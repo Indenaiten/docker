@@ -8,6 +8,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.
 
 ### ADDED
 
+- Se han añadido el fichero `YAML` de Docker Compose con los servicios de `Ubuntu Desktop` `VNC` en la carpeta `./services/os/ubuntu/vnc`.
+
+
 - Se han añadido el fichero `YAML` de Docker Compose con los servicios de `Odoo` `15.0`, `PostgreSQL` `13` y `PGAdmin` `6.13` en la carpeta `./services/web/odoo`.
 
 
