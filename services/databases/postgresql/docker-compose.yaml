@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    hostname: postgres
+    env_file: './.env'
+    networks:
+      - net-postgres
+    volumes:
+      - 'vol-postgres:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+
+  pgadmin:
+    image: dpage/pgadmin4:6.13
+    container_name: pgadmin
+    hostname: pgadmin
+    restart: always
+    depends_on:
+      - postgres
+    env_file: './.env'
+    networks:
+      - net-postgres
+    volumes:
+      - 'vol-pgadmin:/var/lib/pgadmin' 
+      - './docker-data/pgadmin/config/servers.json:/pgadmin4/servers.json'
+    ports:
+      - '8080:80'
+
+networks:
+  net-postgres:
+  
+volumes:
+  vol-postgres:
+  vol-pgadmin:
