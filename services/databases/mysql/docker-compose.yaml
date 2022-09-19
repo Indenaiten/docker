@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0.30
+    container_name: mysql
+    hostname: mysql
+    restart: always
+    env_file: './.env'
+    networks:
+      - net-mysql
+    volumes:
+      - 'vol-mysql:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    restart: always
+    depends_on:
+      - mysql
+    env_file: './.env'
+    networks:
+      - net-mysql
+    ports:
+      - '8080:80'
+
+networks:
+  net-mysql:
+
+volumes:
+  # /var/lib/docker/volumes/wordpress_vol-mysql/_data
+  vol-mysql:
